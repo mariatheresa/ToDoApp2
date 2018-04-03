@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "716688722985",
+    "firebase_url": "https://todoapp2-6bd1f.firebaseio.com",
+    "project_id": "todoapp2-6bd1f",
+    "storage_bucket": "todoapp2-6bd1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716688722985:android:2d774ec9a24cceac",
+        "android_client_info": {
+          "package_name": "com.example.theresa.todoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716688722985-jgnds8krbsocqe0ncslc8n6q00l1pm83.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.theresa.todoapp",
+            "certificate_hash": "eea27aa077b136458121a28cac80ac06274d833a"
+          }
+        },
+        {
+          "client_id": "716688722985-3vmkrmokhvllhqrovd9al4cd0ca82qp5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzBvji8SrVz8sswVWZkBXxARgeKM9UcWk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716688722985-3vmkrmokhvllhqrovd9al4cd0ca82qp5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
