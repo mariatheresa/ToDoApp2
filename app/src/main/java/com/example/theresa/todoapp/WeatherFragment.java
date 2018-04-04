@@ -23,6 +23,8 @@ public class WeatherFragment extends android.support.v4.app.Fragment {
     TextView cityField;
     TextView weatherIcon;
 
+    TextView detailsField;
+
     Handler handler;
 
     public WeatherFragment(){
@@ -35,6 +37,8 @@ public class WeatherFragment extends android.support.v4.app.Fragment {
         View rootView = inflater.inflate(R.layout.activity_weather, container, false);
         cityField = (TextView)rootView.findViewById(R.id.city_field);
         weatherIcon = (TextView)rootView.findViewById(R.id.weather_icon);
+        detailsField = (TextView)rootView.findViewById(R.id.details_field);
+
 
         weatherIcon.setTypeface(weatherFont);
         return rootView;
@@ -72,11 +76,15 @@ public class WeatherFragment extends android.support.v4.app.Fragment {
 
     private void renderWeather(JSONObject json){
         try {
+            JSONObject details = json.getJSONArray("weather").getJSONObject(0);
+
             cityField.setText(json.getString("name").toUpperCase(Locale.US) +
                     ", " +
                     json.getJSONObject("sys").getString("country"));
 
-            JSONObject details = json.getJSONArray("weather").getJSONObject(0);
+            detailsField.setText(
+                    details.getString("description").toUpperCase(Locale.US) );
+
             JSONObject main = json.getJSONObject("main");
 
             setWeatherIcon(details.getInt("id"),

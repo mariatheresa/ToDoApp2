@@ -31,7 +31,7 @@
             android:textColor="@color/white"
             android:textSize="50dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/bannerDay"/>
 
 
@@ -42,7 +42,6 @@
             android:textColor="@color/white"
             android:textSize="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="10dp"
             android:layout_below="@+id/bannerDay"
             android:id="@+id/bannerDate"/>
 
