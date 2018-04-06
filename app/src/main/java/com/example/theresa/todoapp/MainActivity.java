@@ -2,26 +2,21 @@ package com.example.theresa.todoapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -31,8 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -163,10 +156,29 @@ public class MainActivity extends AppCompatActivity {
             task_time.setText(dateString);
         }
 
-        public void SetStatus(String stat)
+        public void SetStatus(final Boolean stat, final String task_key)
         {
-            RadioButton status = (RadioButton) mView.findViewById(R.id.doneButton);
-            status.setChecked(Boolean.parseBoolean(stat));
+            final RadioButton status = (RadioButton) mView.findViewById(R.id.doneButton);
+            status.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+                final DatabaseReference database= FirebaseDatabase.getInstance().getReference().child("Tasks");
+                database.addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        database.child(task_key).child("status").setValue(isChecked);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+            });
+            status.setChecked(stat);
         }
 
     }
@@ -196,29 +208,27 @@ public class MainActivity extends AppCompatActivity {
                 mQuery)
         {
             @Override
-            protected void populateViewHolder(TaskViewHolder viewHolder, Task model, int position) {
+            protected void populateViewHolder(final TaskViewHolder viewHolder, Task model, int position) {
 
 
                     final String task_key = getRef(position).getKey().toString();
 
                     viewHolder.SetName(model.getName());
                     viewHolder.SetTime(model.getTime());
-                    viewHolder.SetStatus(model.getStatus());
 
-
-                    final RadioButton status= (RadioButton) findViewById(R.id.doneButton);
-                   /* status.setOnClickListener(new View.OnClickListener() {
+                    DatabaseReference database= FirebaseDatabase.getInstance().getReference().child("Tasks");
+                    database.child(task_key).addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onClick(View view) {
-                            DatabaseReference hopperRef = FirebaseDatabase.getInstance().getReference().child("Tasks");
-                            String stat= status.getText().toString();
-                            Map<String, Object> taskUpdate = new HashMap<>();
-                            taskUpdate.put("bool",stat);
-                            mDatabase.updateChildren(taskUpdate);
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Boolean status= (Boolean) dataSnapshot.child("status").getValue();
+                            viewHolder.SetStatus(status, task_key);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
                         }
                     });
-                    */
 
                     viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -228,13 +238,13 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(singleTask);
                         }
                     });
+
             }
 
 
 
 
         };
-
         taskList.setAdapter(adapter);
     }
 

@@ -78,7 +78,7 @@ public class WeatherFragment extends android.support.v4.app.Fragment {
         try {
             JSONObject details = json.getJSONArray("weather").getJSONObject(0);
 
-            cityField.setText(json.getString("name").toUpperCase(Locale.US) +
+            cityField.setText(json.getString("name") +
                     ", " +
                     json.getJSONObject("sys").getString("country"));
 

@@ -3,6 +3,7 @@ package com.example.theresa.todoapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,7 +33,6 @@ public class AddActivity extends AppCompatActivity {
         editTask= (EditText) findViewById(R.id.editTask);
         String name= editTask.getText().toString();
         long date= System.currentTimeMillis();
-        String status= "true";
 
         SimpleDateFormat sdf= new SimpleDateFormat("MMMM dd, yyyy h:mm a");
         String dateFormat= sdf.format(date);
@@ -40,8 +40,8 @@ public class AddActivity extends AppCompatActivity {
         myRef= database.getInstance().getReference().child("Tasks");
         DatabaseReference newTask= myRef.push();
         newTask.child("name").setValue(name);
+        newTask.child("status").setValue(false);
         newTask.child("time").setValue(dateFormat);
-        newTask.child("bool").setValue("true");
 
         Intent mainIntent= new Intent(AddActivity.this, MainActivity.class);
         startActivity(mainIntent);

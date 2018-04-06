@@ -4,7 +4,7 @@ public class Task {
 
     private String name;
     private String time;
-    private String status;
+    private Boolean status;
 
     public Task()
     {
@@ -17,7 +17,7 @@ public class Task {
         this.time = time;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
@@ -38,7 +38,7 @@ public class Task {
         this.time = time;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 }
